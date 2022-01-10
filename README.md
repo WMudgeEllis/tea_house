@@ -2,7 +2,8 @@
 
 ## Schema
 
-![Screen Shot 2022-01-10 at 10 20 09 AM](https://user-images.githubusercontent.com/84806907/148809815-d6c51d89-d272-4206-97e9-abb788c4a229.png)
+![Screen Shot 2022-01-10 at 10 24 14 AM](https://user-images.githubusercontent.com/84806907/148810410-6f47400f-dc66-4c9e-bec8-55d4064e5b0e.png)
+
 
 
 
