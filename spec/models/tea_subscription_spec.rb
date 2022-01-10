@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe TeaSubscription do
   describe 'validations' do
-
   end
 
   describe 'relationships' do
