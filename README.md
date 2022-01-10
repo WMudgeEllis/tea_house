@@ -1,5 +1,11 @@
 # README
 
+## Schema
+
+![Screen Shot 2022-01-10 at 10 20 09 AM](https://user-images.githubusercontent.com/84806907/148809815-d6c51d89-d272-4206-97e9-abb788c4a229.png)
+
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
