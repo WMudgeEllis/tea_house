@@ -21,7 +21,24 @@ RSpec.describe SubscriptionSerializer do
     expect(attributes[:title]).to eq(@subscription.title)
     expect(attributes[:price]).to eq(@subscription.price)
     expect(attributes[:frequency]).to eq(@subscription.frequency)
+    expect(attributes[:status]).to eq(@subscription.status)
 
     expect(result[:data][:teas]).to be_a(Array)
+    expect(result[:data][:teas].length).to eq(5)
+  end
+
+  it '#subscription_show' do
+    result = SubscriptionSerializer.subscription_show(@subscription)
+
+    expect(result[:data][:id]).to eq(@subscription.id)
+    expect(result[:data][:type]).to eq('subscription')
+    expect(result[:data][:attributes]).to be_a(Hash)
+
+    attributes = result[:data][:attributes]
+
+    expect(attributes[:title]).to eq(@subscription.title)
+    expect(attributes[:price]).to eq(@subscription.price)
+    expect(attributes[:frequency]).to eq(@subscription.frequency)
+    expect(attributes[:status]).to eq(@subscription.status)
   end
 end
