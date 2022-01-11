@@ -6,6 +6,7 @@ class SubscriptionSerializer
         id: subscription.id,
         type: 'subscription',
         attributes: {
+          customer_id: subscription.customer_id,
           title: subscription.title,
           price: subscription.price,
           frequency: subscription.frequency,
@@ -18,15 +19,29 @@ class SubscriptionSerializer
 
   def self.subscription_show(subscription)
     {
+      data: subscription_hash(subscription)
+    }
+  end
+
+  def self.subscription_index(active, cancelled)
+    {
       data: {
-        id: subscription.id,
-        type: 'subscription',
-        attributes: {
-          title: subscription.title,
-          price: subscription.price,
-          frequency: subscription.frequency,
-          status: subscription.status
-        }
+        active_subscriptions: active.map { |subscription| subscription_hash(subscription) },
+        cancelled_subscriptions: cancelled.map { |subscription| subscription_hash(subscription) }
+      }
+    }
+  end
+
+  def self.subscription_hash(subscription)
+    {
+      id: subscription.id,
+      type: 'subscription',
+      attributes: {
+        customer_id: subscription.customer_id,
+        title: subscription.title,
+        price: subscription.price,
+        frequency: subscription.frequency,
+        status: subscription.status
       }
     }
   end

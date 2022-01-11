@@ -8,7 +8,7 @@ class Api::V1::SubscriptionsController < ApplicationController
       end
       render json: SubscriptionSerializer.new_subscription(subscription, subscription.teas)
     else
-      render json: subscription.errors, status: 400
+      render json: subscription.errors.to_sentence, status: 400
     end
   end
 
@@ -17,15 +17,21 @@ class Api::V1::SubscriptionsController < ApplicationController
     if subscription.update(subscription_params)
       render json: SubscriptionSerializer.subscription_show(subscription)
     else
-      render json: subscription.errors
+      render json: subscription.errors.to_sentence, status: 400
     end
-    # require "pry"; binding.pry
+  end
+
+  def index
+    customer = Customer.find(params[:customer_id])
+    active_subscriptions = customer.active_subscriptions
+    cancelled_subscriptions = customer.cancelled_subscriptions
+    render json: SubscriptionSerializer.subscription_index(active_subscriptions, cancelled_subscriptions)
   end
 
   private
   def format_ids
     if params[:tea_ids].class == String
-      params[:tea_ids].split(',')
+      params[:tea_ids].delete('[]').split(',')
     else
       params[:tea_ids]
     end
