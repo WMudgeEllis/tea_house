@@ -6,12 +6,20 @@ class Api::V1::SubscriptionsController < ApplicationController
       format_ids.each do |tea_id|
         TeaSubscription.create!(tea_id: tea_id, subscription_id: subscription.id)
       end
-
       render json: SubscriptionSerializer.new_subscription(subscription, subscription.teas)
     else
       render json: subscription.errors, status: 400
     end
+  end
 
+  def update
+    subscription = Subscription.find(subscription_params[:id])
+    if subscription.update(subscription_params)
+      render json: SubscriptionSerializer.subscription_show(subscription)
+    else
+      render json: subscription.errors
+    end
+    # require "pry"; binding.pry
   end
 
   private
@@ -24,7 +32,7 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    params.permit(:customer_id, :title, :price, :frequency)
+    params.permit(:customer_id, :title, :price, :frequency, :status, :id)
   end
 
 
