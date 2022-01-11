@@ -18,7 +18,7 @@ RSpec.describe 'new subscription request' do
     post '/api/v1/subscriptions', params: data
 
     expect(response).to be_successful
-
+    require "pry"; binding.pry
     response = JSON.parse(response.body, sybolize_names: true)
 
     expect(response).to have_key(:data)
