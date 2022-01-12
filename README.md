@@ -121,9 +121,9 @@ example response
                 "type": "subscription",
                 "attributes": {
                     "customer_id": 1,
-                    "title": "'best subscription ever'",
-                    "price": 1800,
-                    "frequency": 7,
+                    "title": "'worst subscription ever'",
+                    "price": 18000,
+                    "frequency": 31,
                     "status": "cancelled"
                 }
             }
