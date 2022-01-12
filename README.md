@@ -6,27 +6,126 @@
 ![Screen Shot 2022-01-10 at 10 44 18 AM](https://user-images.githubusercontent.com/84806907/148813393-2de5e9f3-e14e-4a66-abf0-d3cffcfc4ec7.png)
 
 
+## Endpoints
 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### create a subscription
 
-Things you may want to cover:
+post /api/v1/subscriptions
 
-* Ruby version
+Required parameters:
 
-* System dependencies
+* customer_id: integer, must be a valid id
+* title: string
+* price: integer, in cents as a whole number. E.g. $3.35 is 335
+* frequency: integer, in days
+* tea_ids: array of valid tea ids
 
-* Configuration
+Response
+```
+{
+    "data": {
+        "id": 15,
+        "type": "subscription",
+        "attributes": {
+            "customer_id": 1,
+            "title": "'best subscription ever'",
+            "price": 1800,
+            "frequency": 7,
+            "status": "active"
+        },
+        "teas": [
+            {
+                "id": 1,
+                "type": "tea",
+                "attributes": {
+                    "title": "Green Tea",
+                    "description": "Mild, moderate caffine",
+                    "temperature": 80,
+                    "brew_time": 180
+                }
+            },
+            {
+                "id": 2,
+                "type": "tea",
+                "attributes": {
+                    "title": "Gray tea",
+                    "description": "Is a mild earl grey tea, milk is welcome",
+                    "temperature": 93.0,
+                    "brew_time": 240
+                }
+            }
+        ]
+    }
+}
 
-* Database creation
+```
+### notes
+* temperature is in celcius
+* brew_time is in seconds
 
-* Database initialization
+### cancel a subscription
+post /api/v1/subscriptions/:id
 
-* How to run the test suite
+Required parameters:
+* status: string, must be 'cancelled' otherwise the subscription will not be cancelled
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+example response
+```
+{
+    "data": {
+        "id": 1,
+        "type": "subscription",
+        "attributes": {
+            "customer_id": 1,
+            "title": "'best subscription ever'",
+            "price": 1800,
+            "frequency": 7,
+            "status": "cancelled"
+        }
+    }
+}
+```
 
-* ...
+### notes
+Can easily be tweaked to a general update endpoint.
+
+
+### get a customer's subscriptions
+
+get /api/v1/customers/:customer_id/subscriptions
+
+No required parameters
+
+
+example response
+```
+    "data": {
+        "active_subscriptions": [
+            {
+                "id": 2,
+                "type": "subscription",
+                "attributes": {
+                    "customer_id": 1,
+                    "title": "'best subscription ever'",
+                    "price": 1800,
+                    "frequency": 7,
+                    "status": "active"
+                }
+            }
+          ],
+        "cancelled_subscriptions": [
+            {
+                "id": 1,
+                "type": "subscription",
+                "attributes": {
+                    "customer_id": 1,
+                    "title": "'best subscription ever'",
+                    "price": 1800,
+                    "frequency": 7,
+                    "status": "cancelled"
+                }
+            }
+        ]
+```
