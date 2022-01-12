@@ -14,7 +14,8 @@ class Api::V1::SubscriptionsController < ApplicationController
 
   def update
     subscription = Subscription.find(subscription_params[:id])
-    if subscription.update(subscription_params)
+    if subscription_params[:status] == 'cancelled'
+      subscription.update(status: 'cancelled')
       render json: SubscriptionSerializer.subscription_show(subscription)
     else
       render json: subscription.errors.to_sentence, status: 400
