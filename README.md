@@ -11,7 +11,7 @@
 
 ### create a subscription
 
-post /api/v1/subscriptions
+`post /api/v1/subscriptions`
 
 Required parameters:
 
@@ -65,7 +65,7 @@ Response
 * brew_time is in seconds
 
 ### cancel a subscription
-post /api/v1/subscriptions/:id
+`patch /api/v1/subscriptions/:id`
 
 Required parameters:
 * status: string, must be 'cancelled' otherwise the subscription will not be cancelled
@@ -94,7 +94,7 @@ Can easily be tweaked to a general update endpoint.
 
 ### get a customer's subscriptions
 
-get /api/v1/customers/:customer_id/subscriptions
+`get /api/v1/customers/:customer_id/subscriptions`
 
 No required parameters
 
