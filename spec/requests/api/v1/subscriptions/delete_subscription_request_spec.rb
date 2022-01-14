@@ -22,4 +22,26 @@ RSpec.describe 'delete subscription request' do
     expect(body[:data]).to have_key(:attributes)
     expect(body[:data][:attributes]).to be_a(Hash)
   end
+
+  it 'will only cancel subscription' do
+    patch "/api/v1/subscriptions/#{@subscription.id}", params: { title: 'new' }
+
+    expect(response).to_not be_successful
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body).to have_key(:errors)
+    expect(@subscription.title) != 'new'
+  end
+
+  it 'returns 404 when there is no subscription' do
+    patch "/api/v1/subscriptions/#{@subscription.id + 1}", params: { status: 'cancelled' }
+
+    expect(response.status).to eq(404)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body).to have_key(:errors)
+    expect(body[:errors]).to eq('subscription not found')
+  end
 end

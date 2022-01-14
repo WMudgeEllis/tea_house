@@ -1,5 +1,4 @@
 class TeaSerializer
-
   def self.tea_show(tea)
     {
       id: tea.id,
@@ -12,5 +11,4 @@ class TeaSerializer
       }
     }
   end
-
 end
