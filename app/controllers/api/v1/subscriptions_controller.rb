@@ -8,7 +8,7 @@ class Api::V1::SubscriptionsController < ApplicationController
       end
       render json: SubscriptionSerializer.new_subscription(subscription, subscription.teas)
     else
-      render json: subscription.errors.to_sentence, status: 400
+      render json: { errors: subscription.errors}, status: 400
     end
   end
 
@@ -18,8 +18,10 @@ class Api::V1::SubscriptionsController < ApplicationController
       subscription.update(status: 'cancelled')
       render json: SubscriptionSerializer.subscription_show(subscription)
     else
-      render json: subscription.errors.to_sentence, status: 400
+      render json: { errors: subscription.errors }, status: 400
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: 'subscription not found' }, status: 404
   end
 
   def index
@@ -41,6 +43,4 @@ class Api::V1::SubscriptionsController < ApplicationController
   def subscription_params
     params.permit(:customer_id, :title, :price, :frequency, :status, :id)
   end
-
-
 end
